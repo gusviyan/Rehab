@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Rehabilitasi Medik</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Tombol login admin (pojok kanan atas) -->
+    <a href="./admin/login.php" class="btn-admin">Admin Login</a>
+
+    <div class="container">
+        <div class="header">
+            <img src="logo.png" alt="Logo RS Permata Pamulang" class="logo">
+            <h2>Appointment Rehabilitasi Medik <br> RS Permata Pamulang</h2>
+        </div>
+
+        <form method="POST" action="proses.php">
+            <label>Nama Lengkap:</label>
+            <input type="text" name="nama" required>
+
+            <label>Tgl Lahir:</label>
+            <input type="date" name="tgl_lahir" required>
+
+            <label>No Kartu BPJS:</label>
+            <input type="text" name="nik" required>
+
+            <label>No Tlp (Whatsapp):</label>
+            <input type="text" name="no_hp" required>
+
+            <label>Dokter Rehab Medik:</label>
+            <select name="dokter" id="dokter" required>
+                <option value="">Pilih Dokter</option>
+                <option value="dr. Agus Prasetyo, Sp. KFR">dr. Agus Prasetyo, Sp. KFR</option>
+                <option value="dr. Maulana Kurniawan, Sp. KFR">dr. Maulana Kurniawan, Sp. KFR</option>
+            </select>
+
+            <label>Tgl Rencana Kunjungan:</label>
+            <input type="date" name="tgl_kunjungan" id="tgl_kunjungan" required>
+
+            <button type="submit">Buat Appointment</button>
+            <button type="button" disabled>&copy; 2025 Gusviyan - SI RS Permata Pamulang | All Rights Reserved</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

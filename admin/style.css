@@ -1,0 +1,239 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+/* Container utama */
+.container {
+    width: 80%;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #2c3e50;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-btn {
+    display: block;
+    background: #34495e;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.sidebar-btn:hover {
+    background: #1abc9c;
+}
+
+.logout-btn {
+    background: #e74c3c;
+}
+
+.logout-btn:hover {
+    background: #c0392b;
+}
+
+/* Main content */
+.main-content {
+    margin-left: 240px;
+    padding: 20px;
+    width: calc(100% - 240px);
+}
+
+/* Mengatur tampilan logo agar sejajar dengan teks */
+h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgb(0, 0, 0);
+}
+
+/* Mengatur ukuran logo */
+.logo {
+    width: 50px;
+    height: auto;
+}
+
+/* Filter Container */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-container input, .filter-container button, .filter-container .reset {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.filter-container button {
+    background-color: #f58436;
+    color: white;
+    cursor: pointer;
+}
+
+.filter-container .reset {
+    background-color: #423f90;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+}
+
+.filter-container button:hover {
+    background-color: #f77417;
+}
+
+.filter-container .reset:hover {
+    background-color: #1b178d;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f58436;
+    color: white;
+    cursor: pointer;
+}
+
+table th a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Tombol Logout */
+.logout {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background-color: #ffffff;
+    color: rgb(255, 0, 0);
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.logout:hover {
+    background-color: #ffffff;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    background-color: #423f90;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+/* Tabel Kuota */
+.table-kuota {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.table-kuota th, .table-kuota td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Pesan sukses */
+.success-message {
+    color: green;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Pusatkan tombol */
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Tombol utama */
+.btn-primary {
+    background-color: #f58436;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background-color: #e67222;
+}
+
+/* Tombol sekunder */
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}

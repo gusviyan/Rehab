@@ -33,40 +33,55 @@ $result_dokter = $conn->query($query_dokter);
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-    <h2>
-        <img src="logo.png" alt="Logo" class="logo">
-        Set Kuota Dokter Rehab Medik
-    </h2>
 
-    <?php if (isset($_SESSION['success'])): ?>
-        <p class="success-message"><?= $_SESSION['success']; unset($_SESSION['success']); ?></p>
-    <?php endif; ?>
-
-    <form method="POST">
-        <table class="table-kuota">
-            <tr>
-                <th>Dokter</th>
-                <th>Kuota</th>
-            </tr>
-            <?php while ($row = $result_dokter->fetch_assoc()): ?>
-            <tr>
-                <td><?= htmlspecialchars($row['dokter']); ?></td>
-                <td><input type="number" name="kuota[<?= $row['id']; ?>]" value="<?= $row['kuota']; ?>" min="1"></td>
-            </tr>
-            <?php endwhile; ?>
-        </table>
-
-        <!-- Pusatkan tombol -->
-        <div class="button-container">
-            <button type="submit" class="btn-primary">Simpan Perubahan</button>
-            <a href="index.php" class="btn-secondary">Kembali</a>
-        </div>
-    </form>
+<!-- Sidebar -->
+<div class="sidebar">
+    <h3>Admin Panel</h3>
+    <a href="index.php" class="sidebar-btn">Data Appointment</a>
+    <a href="kuota.php" class="sidebar-btn active">Set Kuota Dokter</a>
+    <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a>
+    <a href="logout.php" class="sidebar-btn logout-btn">Logout</a>
 </div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <h2>
+            <img src="logo.png" alt="Logo" class="logo">
+            Set Kuota Dokter Rehab Medik
+        </h2>
+
+        <?php if (isset($_SESSION['success'])): ?>
+            <p class="success-message"><?= $_SESSION['success']; unset($_SESSION['success']); ?></p>
+        <?php endif; ?>
+
+        <form method="POST">
+            <table class="table-kuota">
+                <tr>
+                    <th>Dokter</th>
+                    <th>Kuota</th>
+                </tr>
+                <?php while ($row = $result_dokter->fetch_assoc()): ?>
+                <tr>
+                    <td><?= htmlspecialchars($row['dokter']); ?></td>
+                    <td><input type="number" name="kuota[<?= $row['id']; ?>]" value="<?= $row['kuota']; ?>" min="1"></td>
+                </tr>
+                <?php endwhile; ?>
+            </table>
+
+            <!-- Pusatkan tombol -->
+            <div class="button-container">
+                <button type="submit" class="btn-primary">Simpan Perubahan</button>
+                <a href="index.php" class="btn-secondary">Kembali</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
 <footer class="footer">
     <p>&copy; 2025 Gusviyan - SI RS Permata Pamulang | All Rights Reserved</p>
 </footer>
+
 </body>
 </html>
-

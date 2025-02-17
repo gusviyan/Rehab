@@ -49,7 +49,7 @@ $result_dokter = $conn->query($query_dokter);
     <div class="container">
         <h2>
             <img src="logo.png" alt="Logo" class="logo">
-            Set Kuota Dokter Rehab Medik
+            Set Kuota Dokter Rehabilitasi Medik
         </h2>
 
         <?php if (isset($_SESSION['success'])): ?>

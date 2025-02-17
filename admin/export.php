@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tanggal"])) {
     <div class="container">
         <h2>
             <img src="logo.png" alt="Logo" class="logo">
-            Set Kuota Dokter Rehab Medik
+            Export Data Appointment Rehabilitasi Medik
         </h2>
 
     <!-- Notifikasi jika tidak ada data -->

@@ -29,8 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+    
     <div class="container">
-        <h2>Login Admin</h2>
+    <img src="logo.png" alt="Logo" class="logo">
+    <h2>
+            Login Admin Appointment Rehabilitasi Medik
+        </h2>
         <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
         <form method="POST">
             <label>Username:</label>
@@ -40,5 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit">Login</button>
         </form>
     </div>
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 Gusviyan - SI RS Permata Pamulang | All Rights Reserved</p>
+</footer>
+
 </body>
 </html>

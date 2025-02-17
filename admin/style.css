@@ -47,7 +47,7 @@ body {
 }
 
 .sidebar-btn:hover {
-    background: #1abc9c;
+    background: #423f90;
 }
 
 .logout-btn {
@@ -237,3 +237,18 @@ table tr:hover {
 .btn-secondary:hover {
     background-color: #5a6268;
 }
+
+.edit-btn {
+    background: #ffc107;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-right: 5px;
+}
+.edit-btn:hover {
+    background: #e0a800;
+}
+
+

@@ -56,11 +56,12 @@ function getSortIcon($column, $sort_column, $sort_order) {
 <body>
 
 <!-- Sidebar -->
-<!-- Sidebar -->
 <div class="sidebar">
     <h3>Admin Panel</h3>
+    <a href="index.php" class="sidebar-btn">Data Appointment</a>
     <a href="kuota.php" class="sidebar-btn">Set Kuota Dokter</a>
     <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a> <!-- Tambah Button -->
+    <a href="export.php" class="sidebar-btn">Export</a> <!-- Tambah Button -->
     <a href="logout.php" class="sidebar-btn logout-btn">Logout</a>
 </div>
 
@@ -70,7 +71,7 @@ function getSortIcon($column, $sort_column, $sort_order) {
     <div class="container">
         <h2>
             <img src="logo.png" alt="Logo" class="logo">
-            Data Appointment Rehab Medik
+            Data Appointment Rehabilitasi Medik
         </h2>
 
         <!-- Filter Tanggal dan Dokter -->

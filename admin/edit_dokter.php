@@ -41,10 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: tambah_dokter.php");
             exit();
         } else {
-            $message = "Gagal mengupdate data!";
+            $message = "❌ Gagal mengupdate data!";
         }
     } else {
-        $message = "Nama dokter dan kuota harus diisi!";
+        $message = "⚠️ Nama dokter dan kuota harus diisi!";
     }
 }
 ?>
@@ -56,14 +56,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Dokter</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .form-container {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px 0;
+        }
+        .form-row {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .form-container label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        .notification {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+        }
+        .success-message {
+            background: #28a745;
+        }
+        .error-message {
+            background: #dc3545;
+        }
+    </style>
 </head>
 <body>
 
 <!-- Sidebar -->
+<!-- Sidebar -->
 <div class="sidebar">
     <h3>Admin Panel</h3>
     <a href="index.php" class="sidebar-btn">Data Appointment</a>
-    <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a>
+    <a href="kuota.php" class="sidebar-btn">Set Kuota Dokter</a>
+    <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a> <!-- Tambah Button -->
+    <a href="export.php" class="sidebar-btn">Export</a> <!-- Tambah Button -->
     <a href="logout.php" class="sidebar-btn logout-btn">Logout</a>
 </div>
 
@@ -74,19 +136,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- Notifikasi -->
         <?php if (!empty($message)): ?>
-            <p class="notification"><?= htmlspecialchars($message); ?></p>
+            <p class="notification <?= strpos($message, '❌') !== false ? 'error-message' : 'success-message'; ?>">
+                <?= htmlspecialchars($message); ?>
+            </p>
         <?php endif; ?>
 
         <!-- Form Edit Dokter -->
-        <form method="POST" class="form-container">
-            <label>Nama Dokter:</label>
-            <input type="text" name="nama_dokter" value="<?= htmlspecialchars($dokter['dokter']); ?>" required>
-            
-            <label>Kuota Per Hari:</label>
-            <input type="number" name="kuota" value="<?= htmlspecialchars($dokter['kuota']); ?>" min="1" required>
+        <div class="form-container">
+            <form method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama Dokter:</label>
+                        <input type="text" name="nama_dokter" value="<?= htmlspecialchars($dokter['dokter']); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kuota Per Hari:</label>
+                        <input type="number" name="kuota" value="<?= htmlspecialchars($dokter['kuota']); ?>" min="1" required>
+                    </div>
+                </div>
 
-            <button type="submit">Update Dokter</button>
-        </form>
+                <button type="submit" class="btn-primary">Update Dokter</button>
+            </form>
+        </div>
     </div>
 </div>
 

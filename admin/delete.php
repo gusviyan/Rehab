@@ -81,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- <a href="delete.php" class="sidebar-btn">Hapus Data Lama</a> Tambah Button -->
     <a href="logout.php" class="sidebar-btn logout-btn">Logout</a>
 </div>
-="logout.php" class="sidebar-btn logout-btn">Logout</a>
 </div>
 
 <!-- Main Content -->

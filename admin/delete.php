@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #f0f2f5;
             margin: 0;
             padding: 0;
+        }
         .main-content {
             margin-left: 270px;
             padding: 20px;

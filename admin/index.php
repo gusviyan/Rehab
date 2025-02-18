@@ -58,13 +58,14 @@ function getSortIcon($column, $sort_column, $sort_order) {
 <!-- Sidebar -->
 <div class="sidebar">
     <h3>Admin Panel</h3>
-    <a href="index.php" class="sidebar-btn">Data Appointment</a>
+    <!-- <a href="index.php" class="sidebar-btn">Data Appointment</a> -->
     <a href="kuota.php" class="sidebar-btn">Set Kuota Dokter</a>
     <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a> <!-- Tambah Button -->
     <a href="export.php" class="sidebar-btn">Export</a> <!-- Tambah Button -->
     <a href="delete.php" class="sidebar-btn">Hapus Data Lama</a> <!-- Tambah Button -->
     <a href="logout.php" class="sidebar-btn logout-btn">Logout</a>
 </div>
+
 
 
 <!-- Main Content -->

@@ -1,43 +1,53 @@
 <?php
 require '../koneksi.php';
-require '../vendor/autoload.php'; // Pastikan sudah menginstal PhpSpreadsheet via Composer
+require '../vendor/autoload.php'; // Make sure you have installed PhpSpreadsheet via Composer
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-// Default tanggal hari ini
+// Default today's date
 $tanggal = date('Y-m-d');
 $message = "";
 
-// Jika form dikirim, ambil tanggal yang dipilih
+// If form is submitted, get the selected date
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tanggal"])) {
     $tanggal = mysqli_real_escape_string($conn, $_POST["tanggal"]);
 
-    // Ambil data appointment berdasarkan tanggal
+    // Retrieve appointment data by date
     $query = "SELECT nama, tgl_lahir, nik, no_hp, dokter, tgl_kunjungan FROM appointments WHERE tgl_kunjungan = '$tanggal'";
     $result = mysqli_query($conn, $query);
 
-    // Cek apakah query berhasil dijalankan
+    // Check if the query executed successfully
     if (!$result) {
-        die("❌ Error pada query: " . mysqli_error($conn));
+        die("❌ Error in query: " . mysqli_error($conn));
     }
 
-    // Jika ada data, buat file XLSX dan download otomatis
+    // If there is data, create an XLSX file and download automatically
     if (mysqli_num_rows($result) > 0) {
-        // Membuat objek Spreadsheet
+        // Create Spreadsheet object
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Menulis header
-        $sheet->setCellValue('A1', 'Nama Pasien');
-        $sheet->setCellValue('B1', 'Tanggal Lahir');
-        $sheet->setCellValue('C1', 'No Kartu');
-        $sheet->setCellValue('D1', 'No HP');
-        $sheet->setCellValue('E1', 'Dokter');
-        $sheet->setCellValue('F1', 'Tanggal Kunjungan');
+        // Add logo
+        $drawing = new Drawing();
+        $drawing->setName('Logo');
+        $drawing->setDescription('Logo');
+        $drawing->setPath('path/to/logo.png'); // Path to your logo file
+        $drawing->setHeight(100);
+        $drawing->setCoordinates('A1');
+        $drawing->setWorksheet($sheet);
 
-        // Menulis data appointment
-        $row = 2; // Mulai dari baris 2 setelah header
+        // Write header
+        $sheet->setCellValue('A3', 'Nama Pasien');
+        $sheet->setCellValue('B3', 'Tanggal Lahir');
+        $sheet->setCellValue('C3', 'No Kartu');
+        $sheet->setCellValue('D3', 'No HP');
+        $sheet->setCellValue('E3', 'Dokter');
+        $sheet->setCellValue('F3', 'Tanggal Kunjungan');
+
+        // Write appointment data
+        $row = 4; // Start from row 4 after the logo and header
         while ($data = mysqli_fetch_assoc($result)) {
             $sheet->setCellValue('A' . $row, $data['nama']);
             $sheet->setCellValue('B' . $row, $data['tgl_lahir']);
@@ -45,19 +55,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tanggal"])) {
             $sheet->setCellValue('D' . $row, $data['no_hp']);
             $sheet->setCellValue('E' . $row, $data['dokter']);
             
-            // Format tanggal untuk kolom 'Tanggal Kunjungan' dan 'Tanggal Lahir'
+            // Format date for 'Tanggal Kunjungan' and 'Tanggal Lahir' columns
             $sheet->setCellValue('F' . $row, \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel(new DateTime($data['tgl_kunjungan'])));
             $sheet->getStyle('F' . $row)->getNumberFormat()->setFormatCode('DD-MM-YYYY');
             
             $row++;
         }
 
-        // Set header untuk download file XLSX
+        // Set header for XLSX file download
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="appointment_' . $tanggal . '.xlsx"');
         header('Cache-Control: max-age=0');
 
-        // Menulis file XLSX ke output
+        // Write XLSX file to output
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
         exit();
@@ -146,9 +156,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tanggal"])) {
     <a href="index.php" class="sidebar-btn">Data Appointment</a>
     <a href="kuota.php" class="sidebar-btn">Set Kuota Dokter</a>
     <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a> <!-- Tambah Button -->
-    <a href="export.php" class="sidebar-btn">Export</a> <!-- Tambah Button -->
+    <!-- <a href="export.php" class="sidebar-btn">Export</a> -->
+    <a href="delete.php" class="sidebar-btn">Hapus Data Lama</a> <!-- Tambah Button -->
     <a href="logout.php" class="sidebar-btn logout-btn">Logout</a>
 </div>
+
 
 <div class="main-content">
     <div class="container">
@@ -171,6 +183,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tanggal"])) {
 
     <a href="index.php" class="back-btn">← Kembali ke Data Appointment</a>
 </div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 Gusviyan - SI RS Permata Pamulang | All Rights Reserved</p>
+</footer>
 
 </body>
 </html>

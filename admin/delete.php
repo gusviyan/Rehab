@@ -76,10 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h3>Admin Panel</h3>
     <a href="index.php" class="sidebar-btn">Data Appointment</a>
     <a href="kuota.php" class="sidebar-btn">Set Kuota Dokter</a>
-    <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a>
+    <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a> <!-- Tambah Button -->
     <a href="export.php" class="sidebar-btn">Export</a>
-    <a href="delete_appointments.php" class="sidebar-btn">Hapus Data Lama</a>
+    <!-- <a href="delete.php" class="sidebar-btn">Hapus Data Lama</a> Tambah Button -->
     <a href="logout.php" class="sidebar-btn logout-btn">Logout</a>
+</div>
+="logout.php" class="sidebar-btn logout-btn">Logout</a>
 </div>
 
 <!-- Main Content -->

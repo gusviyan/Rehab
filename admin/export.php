@@ -29,14 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tanggal"])) {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Add logo
-        $drawing = new Drawing();
-        $drawing->setName('Logo');
-        $drawing->setDescription('Logo');
-        $drawing->setPath('path/to/logo.png'); // Path to your logo file
-        $drawing->setHeight(100);
-        $drawing->setCoordinates('A1');
-        $drawing->setWorksheet($sheet);
+        // // Add logo
+        // $drawing = new Drawing();
+        // $drawing->setName('Logo');
+        // $drawing->setDescription('Logo');
+        // $drawing->setPath('path/to/logo.png'); // Path to your logo file
+        // $drawing->setHeight(100);
+        // $drawing->setCoordinates('A1');
+        // $drawing->setWorksheet($sheet);
 
         // Write header
         $sheet->setCellValue('A3', 'Nama Pasien');

@@ -87,6 +87,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             var popup = document.getElementById('popup');
             popup.style.display = 'flex';
+
+            // Set the minimum date for Tgl Rencana Kunjungan input
+            var tglKunjunganInput = document.getElementById('tgl_kunjungan');
+            var today = new Date().toISOString().split('T')[0];
+            tglKunjunganInput.setAttribute('min', today);
         });
 
         function closePopup() {

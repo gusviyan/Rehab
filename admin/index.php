@@ -98,24 +98,33 @@ function getSortIcon($column, $sort_column, $sort_order) {
             Data Appointment Rehabilitasi Medik
         </h2>
 
-        <!-- Filter Tanggal dan Dokter -->
-        <form method="GET" class="filter-container">
-            <label>Filter berdasarkan tanggal kunjungan:</label>
-            <input type="date" name="tgl_filter" value="<?= htmlspecialchars($tgl_filter); ?>">
-            
-            <label>Pilih Dokter:</label>
-            <select name="dokter_filter">
-                <option value="">Semua Dokter</option>
-                <?php foreach ($dokterOptions as $dokter): ?>
-                    <option value="<?= htmlspecialchars($dokter); ?>" <?= ($dokter == $dokter_filter) ? 'selected' : ''; ?>>
-                        <?= htmlspecialchars($dokter); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            
-            <button type="submit">Filter</button>
-            <a href="index.php" class="reset">Reset</a>
-        </form>
+       <!-- Filter Tanggal dan Dokter -->
+<form method="GET" class="filter-container">
+    <div class="filter-group">
+        <label for="tgl_filter">Filter berdasarkan tanggal kunjungan:</label>
+        <input type="date" id="tgl_filter" name="tgl_filter" value="<?= htmlspecialchars($tgl_filter); ?>">
+    </div>
+    
+    <div class="filter-group">
+        <label for="dokter_filter">Pilih Dokter:</label>
+        <select id="dokter_filter" name="dokter_filter">
+            <option value="">Semua Dokter</option>
+            <?php foreach ($dokterOptions as $dokter): ?>
+                <option value="<?= htmlspecialchars($dokter); ?>" <?= ($dokter == $dokter_filter) ? 'selected' : ''; ?>>
+                    <?= htmlspecialchars($dokter); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    
+    <div class="filter-group">
+        <button type="submit">Filter</button>
+        <a href="index.php" class="reset">Reset</a>
+    </div>
+</form>
+
+
+
 
         <!-- Tabel Data Appointment -->
         <table>

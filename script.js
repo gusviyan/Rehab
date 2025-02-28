@@ -60,6 +60,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         return false;
     }
+    
+    function validateForm() {
+        var nikInput = document.querySelector('input[name="nik"]');
+        if (nikInput.value.length !== 13) {
+            alert("No Kartu BPJS harus terdiri dari 13 angka.");
+            return false;
+        }
+        return true;
+    }
+
+    // Membatasi input No Kartu BPJS hanya sampai 13 angka
+    var nikInput = document.querySelector('input[name="nik"]');
+    nikInput.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, ''); // Hanya angka yang diperbolehkan
+        if (this.value.length > 13) {
+            this.value = this.value.slice(0, 13);
+        }
+    });
 
     function updateDisabledDates() {
         let today = new Date();
@@ -75,8 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        tglInput.setAttribute("min", today.toISOString().split("T")[0]); // Set minimal 1 hari ke depan
-        tglInput.setAttribute("max", nextYear.toISOString().split("T")[0]); // Set maksimal
+        tglInput.setAttribute("min", today.toISOString().split('T')[0]); // Set minimal 1 hari ke depan
+        tglInput.setAttribute("max", nextYear.toISOString().split('T')[0]); // Set maksimal
 
         tglInput.addEventListener("input", function () {
             if (disabledDates.includes(tglInput.value)) {
@@ -85,7 +103,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
     dokterSelect.addEventListener("change", updateDisabledDates);
     updateDisabledDates(); // Jalankan saat halaman dimuat
+
+    
+
 });
+

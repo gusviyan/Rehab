@@ -41,6 +41,19 @@ if (!empty($dokter_filter)) {
 $query .= " ORDER BY $sort_column $sort_order LIMIT $offset, $records_per_page";
 $result = $conn->query($query);
 
+//id
+$query = "SELECT id, nama, tgl_lahir, nik, no_hp, dokter, tgl_kunjungan FROM appointments WHERE 1=1";
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $deleteQuery = "DELETE FROM appointments WHERE id = '$id'";
+    if ($conn->query($deleteQuery) === TRUE) {
+        echo "Record deleted successfully";
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+}
+
+
 // Query untuk menghitung total records
 $total_records_query = "SELECT COUNT(*) as total FROM appointments WHERE 1=1";
 if (!empty($tgl_filter)) {
@@ -128,28 +141,35 @@ function getSortIcon($column, $sort_column, $sort_order) {
 
         <!-- Tabel Data Appointment -->
         <table>
-            <thead>
-                <tr>
-                    <th><a href="?sort=nama&order=<?= $next_order; ?>&tgl_filter=<?= $tgl_filter; ?>&dokter_filter=<?= $dokter_filter; ?>&records_per_page=<?= $records_per_page; ?>&page=<?= $page; ?>">Nama Lengkap<?= getSortIcon('nama', $sort_column, $sort_order); ?></a></th>
-                    <th><a href="?sort=tgl_lahir&order=<?= $next_order; ?>&tgl_filter=<?= $tgl_filter; ?>&dokter_filter=<?= $dokter_filter; ?>&records_per_page=<?= $records_per_page; ?>&page=<?= $page; ?>">Tgl Lahir<?= getSortIcon('tgl_lahir', $sort_column, $sort_order); ?></a></th>
-                    <th><a href="?sort=nik&order=<?= $next_order; ?>&tgl_filter=<?= $tgl_filter; ?>&dokter_filter=<?= $dokter_filter; ?>&records_per_page=<?= $records_per_page; ?>&page=<?= $page; ?>">No BPJS<?= getSortIcon('nik', $sort_column, $sort_order); ?></a></th>
-                    <th><a href="?sort=no_hp&order=<?= $next_order; ?>&tgl_filter=<?= $tgl_filter; ?>&dokter_filter=<?= $dokter_filter; ?>&records_per_page=<?= $records_per_page; ?>&page=<?= $page; ?>">No Tlp (WA)<?= getSortIcon('no_hp', $sort_column, $sort_order); ?></a></th>
-                    <th><a href="?sort=dokter&order=<?= $next_order; ?>&tgl_filter=<?= $tgl_filter; ?>&dokter_filter=<?= $dokter_filter; ?>&records_per_page=<?= $records_per_page; ?>&page=<?= $page; ?>">Dokter<?= getSortIcon('dokter', $sort_column, $sort_order); ?></a></th>
-                    <th><a href="?sort=tgl_kunjungan&order=<?= $next_order; ?>&tgl_filter=<?= $tgl_filter; ?>&dokter_filter=<?= $dokter_filter; ?>&records_per_page=<?= $records_per_page; ?>&page=<?= $page; ?>">Tgl Kunjungan<?= getSortIcon('tgl_kunjungan', $sort_column, $sort_order); ?></a></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['nama']); ?></td>
-                    <td><?= date('d-m-Y', strtotime($row['tgl_lahir'])); ?></td>
-                    <td><?= htmlspecialchars($row['nik']); ?></td>
-                    <td><?= htmlspecialchars($row['no_hp']); ?></td>
-                    <td><?= htmlspecialchars($row['dokter']); ?></td>
-                    <td><?= date('d-m-Y', strtotime($row['tgl_kunjungan'])); ?></td>
-                </tr>
-                <?php endwhile; ?>
-            </tbody>
+        <table>
+    <thead>
+        <tr>
+            <th>Nama Lengkap</th>
+            <th>Tgl Lahir</th>
+            <th>No BPJS</th>
+            <th>No Tlp (WA)</th>
+            <th>Dokter</th>
+            <th>Tgl Kunjungan</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php while($row = $result->fetch_assoc()): ?>
+        <tr>
+            <td><?= htmlspecialchars($row['nama']); ?></td>
+            <td><?= date('d-m-Y', strtotime($row['tgl_lahir'])); ?></td>
+            <td><?= htmlspecialchars($row['nik']); ?></td>
+            <td><?= htmlspecialchars($row['no_hp']); ?></td>
+            <td><?= htmlspecialchars($row['dokter']); ?></td>
+            <td><?= date('d-m-Y', strtotime($row['tgl_kunjungan'])); ?></td>
+            <td>
+                <a href="?delete=<?= $row['id'] ?>" class="delete-btn">Delete</a>
+            </td>
+        </tr>
+        <?php endwhile; ?>
+    </tbody>
+</table>
+
         </table>
 
         <!-- Pagination Controls -->
@@ -219,7 +239,16 @@ function getSortIcon($column, $sort_column, $sort_order) {
 .records-per-page select {
     padding: 5px;
     border-radius: 5px;
+    
 }
+.delete-btn {
+        color: purple;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .delete-btn:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <script>

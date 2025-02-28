@@ -1,3 +1,4 @@
+
 /* Global Styles */
 body {
     font-family: Arial, sans-serif;
@@ -57,6 +58,16 @@ body {
 .logout-btn:hover {
     background: #c0392b;
 }
+
+ .delete-btn {
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+    }
+
+    .delete-btn:hover {
+        text-decoration: underline;
+    }
 
 /* Media Query for responsiveness */
 @media (max-width: 768px) {

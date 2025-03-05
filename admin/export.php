@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tanggal"])) {
 
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2025 Gusviyan - SI RS Permata Pamulang | All Rights Reserved</p>
+<p>&copy; 2025 RS Permata Pamulang | All Rights Reserved</p>
 </footer>
 
 </body>

@@ -180,7 +180,7 @@ session_start();
 
         <!-- **Footer Credit** -->
         <div class="credit">
-            <p>© 2025 Gusviyan - SI RS Permata Pamulang | All Rights Reserved</p>
+            <p>© 2025 RS Permata Pamulang | All Rights Reserved</p>
         </div>
     </div>
 

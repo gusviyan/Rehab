@@ -88,6 +88,12 @@ function getSortIcon($column, $sort_column, $sort_order) {
             var value = select.options[select.selectedIndex].value;
             window.location.href = 'index.php?records_per_page=' + value;
         }
+
+        function confirmDelete(id) {
+            if (confirm("Are you sure you want to delete this record?")) {
+                window.location.href = "?delete=" + id;
+            }
+        }
     </script>
 </head>
 <body>
@@ -111,65 +117,59 @@ function getSortIcon($column, $sort_column, $sort_order) {
             Data Appointment Rehabilitasi Medik
         </h2>
 
-       <!-- Filter Tanggal dan Dokter -->
-<form method="GET" class="filter-container">
-    <div class="filter-group">
-        <label for="tgl_filter">Filter berdasarkan tanggal kunjungan:</label>
-        <input type="date" id="tgl_filter" name="tgl_filter" value="<?= htmlspecialchars($tgl_filter); ?>">
-    </div>
-    
-    <div class="filter-group">
-        <label for="dokter_filter">Pilih Dokter:</label>
-        <select id="dokter_filter" name="dokter_filter">
-            <option value="">Semua Dokter</option>
-            <?php foreach ($dokterOptions as $dokter): ?>
-                <option value="<?= htmlspecialchars($dokter); ?>" <?= ($dokter == $dokter_filter) ? 'selected' : ''; ?>>
-                    <?= htmlspecialchars($dokter); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    
-    <div class="filter-group">
-        <button type="submit">Filter</button>
-        <a href="index.php" class="reset">Reset</a>
-    </div>
-</form>
+        <!-- Filter Tanggal dan Dokter -->
+        <form method="GET" class="filter-container">
+            <div class="filter-group">
+                <label for="tgl_filter">Filter berdasarkan tanggal kunjungan:</label>
+                <input type="date" id="tgl_filter" name="tgl_filter" value="<?= htmlspecialchars($tgl_filter); ?>">
+            </div>
 
+            <div class="filter-group">
+                <label for="dokter_filter">Pilih Dokter:</label>
+                <select id="dokter_filter" name="dokter_filter">
+                    <option value="">Semua Dokter</option>
+                    <?php foreach ($dokterOptions as $dokter): ?>
+                        <option value="<?= htmlspecialchars($dokter); ?>" <?= ($dokter == $dokter_filter) ? 'selected' : ''; ?>>
+                            <?= htmlspecialchars($dokter); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-
+            <div class="filter-group">
+                <button type="submit">Filter</button>
+                <a href="index.php" class="reset">Reset</a>
+            </div>
+        </form>
 
         <!-- Tabel Data Appointment -->
         <table>
-        <table>
-    <thead>
-        <tr>
-            <th>Nama Lengkap</th>
-            <th>Tgl Lahir</th>
-            <th>No BPJS</th>
-            <th>No Tlp (WA)</th>
-            <th>Dokter</th>
-            <th>Tgl Kunjungan</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while($row = $result->fetch_assoc()): ?>
-        <tr>
-            <td><?= htmlspecialchars($row['nama']); ?></td>
-            <td><?= date('d-m-Y', strtotime($row['tgl_lahir'])); ?></td>
-            <td><?= htmlspecialchars($row['nik']); ?></td>
-            <td><?= htmlspecialchars($row['no_hp']); ?></td>
-            <td><?= htmlspecialchars($row['dokter']); ?></td>
-            <td><?= date('d-m-Y', strtotime($row['tgl_kunjungan'])); ?></td>
-            <td>
-                <a href="?delete=<?= $row['id'] ?>" class="delete-btn">Delete</a>
-            </td>
-        </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
-
+            <thead>
+                <tr>
+                    <th>Nama Lengkap</th>
+                    <th>Tgl Lahir</th>
+                    <th>No BPJS</th>
+                    <th>No Tlp (WA)</th>
+                    <th>Dokter</th>
+                    <th>Tgl Kunjungan</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?= htmlspecialchars($row['nama']); ?></td>
+                    <td><?= date('d-m-Y', strtotime($row['tgl_lahir'])); ?></td>
+                    <td><?= htmlspecialchars($row['nik']); ?></td>
+                    <td><?= htmlspecialchars($row['no_hp']); ?></td>
+                    <td><?= htmlspecialchars($row['dokter']); ?></td>
+                    <td><?= date('d-m-Y', strtotime($row['tgl_kunjungan'])); ?></td>
+                    <td>
+                        <a href="#" onclick="confirmDelete(<?= $row['id'] ?>)" class="delete-btn">Delete</a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
         </table>
 
         <!-- Pagination Controls -->
@@ -194,7 +194,7 @@ function getSortIcon($column, $sort_column, $sort_order) {
 
 <!-- Footer -->
 <footer class="footer">
-<p>&copy; 2025 RS Permata Pamulang | All Rights Reserved</p>
+    <p>&copy; 2025 RS Permata Pamulang | All Rights Reserved</p>
 </footer>
 
 <style>
@@ -239,16 +239,16 @@ function getSortIcon($column, $sort_column, $sort_order) {
 .records-per-page select {
     padding: 5px;
     border-radius: 5px;
-    
 }
+
 .delete-btn {
-        color: red;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .delete-btn:hover {
-        text-decoration: underline;
-    }
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+}
+.delete-btn:hover {
+    text-decoration: underline;
+}
 </style>
 
 <script>
@@ -259,7 +259,14 @@ function updateRecordsPerPage() {
     url.searchParams.set('records_per_page', value);
     window.location.href = url.href;
 }
+
+function confirmDelete(id) {
+    if (confirm("Hapus Data Appointment ini?")) {
+        window.location.href = "?delete=" + id;
+    }
+}
 </script>
 
 </body>
 </html>
+

@@ -75,6 +75,7 @@
         </form>
     </div>
 
+    <!-- Popup info -->
     <div class="popup" id="popup">
         <div class="popup-content">
             <p><b>Layanan ini hanya digunakan untuk Appointment kontrol dokter Rehabilitasi Medik</b></p>
@@ -83,23 +84,66 @@
         </div>
     </div>
 
+    <!-- Script -->
     <script>
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     var popup = document.getElementById('popup');
-        //     popup.style.display = 'flex';
-
-        //     // Set the minimum date for Tgl Rencana Kunjungan input
-        //     var tglKunjunganInput = document.getElementById('tgl_kunjungan');
-        //     var today = new Date().toISOString().split('T')[0];
-        //     tglKunjunganInput.setAttribute('min', today);
-        // });
-
         function closePopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        const dokterSelect = document.getElementById('dokter');
+        const tglInput = document.getElementById('tgl_kunjungan');
+        const form = document.querySelector('form');
+        let hariAktif = [];
+
+        // Set tanggal minimal = besok
+        const today = new Date();
+        const besok = new Date(today);
+        besok.setDate(today.getDate() + 1);
+        const minDateStr = besok.toISOString().split('T')[0];
+        tglInput.min = minDateStr;
+
+        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+        // Saat dokter dipilih, ambil jadwal praktik dari server
+        dokterSelect.addEventListener('change', () => {
+            const dokter = dokterSelect.value;
+            if (dokter !== '') {
+                fetch(`get_jadwal.php?dokter=${encodeURIComponent(dokter)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        hariAktif = data;
+                        console.log("Hari praktik dokter:", hariAktif);
+                        tglInput.value = ''; // Reset tanggal jika dokter diganti
+                    });
+            } else {
+                hariAktif = [];
+            }
+        });
+
+        // Validasi saat tanggal dipilih
+        tglInput.addEventListener('input', function () {
+            if (!isHariValid(this.value)) {
+                alert("Dokter tidak praktek pada hari tersebut. Silakan pilih hari lain.");
+                this.value = '';
+            }
+        });
+
+        // Validasi saat form disubmit
+        form.addEventListener('submit', function (e) {
+            if (!isHariValid(tglInput.value)) {
+                alert("Tanggal kunjungan tidak sesuai dengan jadwal praktik dokter.");
+                tglInput.focus();
+                e.preventDefault();
+            }
+        });
+
+        // Fungsi cek apakah hari sesuai jadwal dokter
+        function isHariValid(tanggalStr) {
+            if (!tanggalStr || hariAktif.length === 0) return false;
+            const dateVal = new Date(tanggalStr);
+            const hariDipilih = days[dateVal.getDay()];
+            return hariAktif.includes(hariDipilih);
         }
     </script>
-<script src="script.js"></script>
-
 </body>
 </html>

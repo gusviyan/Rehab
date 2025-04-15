@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="sidebar">
     <h3>Admin Panel</h3>
     <a href="index.php" class="sidebar-btn">Data Appointment</a>
-    <a href="kuota.php" class="sidebar-btn">Set Kuota Dokter</a>
+    <a href="kuota.php" class="sidebar-btn">Kuota dan Jadwal</a>
     <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a> <!-- Tambah Button -->
     <a href="export.php" class="sidebar-btn">Export</a> <!-- Tambah Button -->
     <a href="logout.php" class="sidebar-btn logout-btn">Logout</a>

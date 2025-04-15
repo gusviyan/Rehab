@@ -102,7 +102,7 @@ function getSortIcon($column, $sort_column, $sort_order) {
 <div class="sidebar">
     <h3>Admin Panel</h3>
     <a href="index.php" class="sidebar-btn">Data Appointment</a>
-    <a href="kuota.php" class="sidebar-btn">Set Kuota Dokter</a>
+    <a href="kuota.php" class="sidebar-btn">Kuota dan Jadwal</a>
     <a href="tambah_dokter.php" class="sidebar-btn">Tambah Dokter</a>
     <a href="export.php" class="sidebar-btn">Export</a>
     <a href="delete.php" class="sidebar-btn">Hapus Data Lama</a>
@@ -153,6 +153,7 @@ function getSortIcon($column, $sort_column, $sort_order) {
                     <th>Dokter</th>
                     <th>Tgl Kunjungan</th>
                     <th>Aksi</th>
+                    <th>Hubungi</th>
                 </tr>
             </thead>
             <tbody>
@@ -165,12 +166,19 @@ function getSortIcon($column, $sort_column, $sort_order) {
                     <td><?= htmlspecialchars($row['dokter']); ?></td>
                     <td><?= date('d-m-Y', strtotime($row['tgl_kunjungan'])); ?></td>
                     <td>
-                        <a href="#" onclick="confirmDelete(<?= $row['id'] ?>)" class="delete-btn">Delete</a>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+                    <a href="#" onclick="confirmDelete(<?= $row['id'] ?>)" class="delete-btn">Delete</a>
+            </td>
+            <td>
+                <?php 
+                    // Convert phone number
+                    $formatted_no_hp = preg_replace('/^0/', '+62', $row['no_hp']);
+                ?>
+                <a href="https://wa.me/<?= htmlspecialchars($formatted_no_hp); ?>" target="_blank" class="whatsapp-link">Whatsapp</a>
+            </td>
+        </tr>
+        <?php endwhile; ?>
+    </tbody>
+</table>
 
         <!-- Pagination Controls -->
         <div class="pagination">
@@ -248,6 +256,12 @@ function getSortIcon($column, $sort_column, $sort_order) {
 }
 .delete-btn:hover {
     text-decoration: underline;
+}
+
+.whatsapp-link {
+    color: green;
+    text-decoration: none;
+    font-weight: bold;
 }
 </style>
 

@@ -121,12 +121,14 @@
         });
 
         // Validasi saat tanggal dipilih
-        tglInput.addEventListener('input', function () {
-            if (!isHariValid(this.value)) {
-                alert("Dokter tidak praktek pada hari tersebut. Silakan pilih hari lain.");
-                this.value = '';
-            }
-        });
+// Validasi hanya saat tanggal benar-benar dipilih
+tglInput.addEventListener('change', function () {
+    if (this.value && !isHariValid(this.value)) {
+        alert("Dokter tidak praktek pada hari tersebut. Silakan pilih hari lain.");
+        this.value = '';
+    }
+});
+
 
         // Validasi saat form disubmit
         form.addEventListener('submit', function (e) {

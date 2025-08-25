@@ -68,7 +68,7 @@
             </select>
 
             <label>Tgl Rencana Kunjungan:</label>
-            <input type="date" name="tgl_kunjungan" id="tgl_kunjungan" required>
+            <input type="date" name="tgl_kunjungan" id="tgl_kunjungan" required readonly>
 
             <button type="submit">Buat Appointment</button>
             <button type="button" disabled>&copy; 2025 RS Permata Pamulang | All Rights Reserved</button>
@@ -103,33 +103,45 @@
         const minDateStr = besok.toISOString().split('T')[0];
         tglInput.min = minDateStr;
 
-        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-
-        // Saat dokter dipilih, ambil jadwal praktik dari server
-        dokterSelect.addEventListener('change', () => {
-            const dokter = dokterSelect.value;
-            if (dokter !== '') {
-                fetch(`get_jadwal.php?dokter=${encodeURIComponent(dokter)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        hariAktif = data;
-                        console.log("Hari praktik dokter:", hariAktif);
-                        tglInput.value = ''; // Reset tanggal jika dokter diganti
-                    });
-            } else {
-                hariAktif = [];
+        // Jika user klik tanggal sebelum pilih dokter
+        tglInput.addEventListener('click', function () {
+            if (dokterSelect.value === '') {
+                alert("Silahkan pilih dokter rehab medik sebelum memilih tanggal rencana kunjungan");
+                dokterSelect.focus();
+                this.blur();
             }
         });
 
-        // Validasi saat tanggal dipilih
-// Validasi hanya saat tanggal benar-benar dipilih
-tglInput.addEventListener('change', function () {
-    if (this.value && !isHariValid(this.value)) {
-        alert("Dokter tidak praktek pada hari tersebut. Silakan pilih hari lain.");
-        this.value = '';
+// Event saat dokter dipilih
+dokterSelect.addEventListener('change', () => {
+    const dokter = dokterSelect.value;
+    if (dokter !== '') {
+        // Hapus readonly → bisa pilih tanggal
+        tglInput.removeAttribute('readonly');
+
+        fetch(`get_jadwal.php?dokter=${encodeURIComponent(dokter)}`)
+            .then(response => response.json())
+            .then(data => {
+                hariAktif = data;
+                console.log("Hari praktik dokter:", hariAktif);
+                tglInput.value = ''; // Reset tanggal jika dokter diganti
+            });
+    } else {
+        hariAktif = [];
+        // Lock lagi datepicker
+        tglInput.setAttribute('readonly', true);
+        tglInput.value = '';
     }
 });
 
+
+        // Validasi saat tanggal dipilih
+        tglInput.addEventListener('change', function () {
+            if (this.value && !isHariValid(this.value)) {
+                alert("Dokter tidak praktek pada hari tersebut. Silakan pilih hari lain.");
+                this.value = '';
+            }
+        });
 
         // Validasi saat form disubmit
         form.addEventListener('submit', function (e) {
@@ -144,6 +156,7 @@ tglInput.addEventListener('change', function () {
         function isHariValid(tanggalStr) {
             if (!tanggalStr || hariAktif.length === 0) return false;
             const dateVal = new Date(tanggalStr);
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
             const hariDipilih = days[dateVal.getDay()];
             return hariAktif.includes(hariDipilih);
         }

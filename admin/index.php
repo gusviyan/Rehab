@@ -143,30 +143,35 @@ function getSortIcon($column, $sort_column, $sort_order) {
         </form>
 
         <!-- Tabel Data Appointment -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Nama Lengkap</th>
-                    <th>Tgl Lahir</th>
-                    <th>No BPJS</th>
-                    <th>No Tlp (WA)</th>
-                    <th>Dokter</th>
-                    <th>Tgl Kunjungan</th>
-                    <th>Aksi</th>
-                    <th>Hubungi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['nama']); ?></td>
-                    <td><?= date('d-m-Y', strtotime($row['tgl_lahir'])); ?></td>
-                    <td><?= htmlspecialchars($row['nik']); ?></td>
-                    <td><?= htmlspecialchars($row['no_hp']); ?></td>
-                    <td><?= htmlspecialchars($row['dokter']); ?></td>
-                    <td><?= date('d-m-Y', strtotime($row['tgl_kunjungan'])); ?></td>
-                    <td>
-                    <a href="#" onclick="confirmDelete(<?= $row['id'] ?>)" class="delete-btn">Delete</a>
+<table>
+    <thead>
+        <tr>
+            <th>Tgl Daftar</th> <!-- kolom baru -->
+            <th>Nama Lengkap</th>
+            <th>Tgl Lahir</th>
+            <th>No BPJS</th>
+            <th>No Tlp (WA)</th>
+            <th>Dokter</th>
+            <th>Tgl Kunjungan</th>
+            <th>Aksi</th>
+            <th>Hubungi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php while($row = $result->fetch_assoc()): ?>
+        <tr>
+            <!-- Kolom baru -->
+            <td>
+                <?= !empty($row['tgl_daftar']) ? date('d-m-Y', strtotime($row['tgl_daftar'])) : '-'; ?>
+            </td>
+            <td><?= htmlspecialchars($row['nama']); ?></td>
+            <td><?= date('d-m-Y', strtotime($row['tgl_lahir'])); ?></td>
+            <td><?= htmlspecialchars($row['nik']); ?></td>
+            <td><?= htmlspecialchars($row['no_hp']); ?></td>
+            <td><?= htmlspecialchars($row['dokter']); ?></td>
+            <td><?= date('d-m-Y', strtotime($row['tgl_kunjungan'])); ?></td>
+            <td>
+                <a href="#" onclick="confirmDelete(<?= $row['id'] ?>)" class="delete-btn">Delete</a>
             </td>
             <td>
                 <?php 
@@ -180,12 +185,56 @@ function getSortIcon($column, $sort_column, $sort_order) {
     </tbody>
 </table>
 
-        <!-- Pagination Controls -->
-        <div class="pagination">
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                <a href="?page=<?= $i; ?>&records_per_page=<?= $records_per_page; ?>&sort=<?= $sort_column; ?>&order=<?= $sort_order; ?>&tgl_filter=<?= $tgl_filter; ?>&dokter_filter=<?= $dokter_filter; ?>" class="<?= ($i == $page) ? 'active' : ''; ?>"><?= $i; ?></a>
-            <?php endfor; ?>
-        </div>
+
+<!-- Pagination Controls -->
+<div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="?page=<?= $page - 1; ?>&records_per_page=<?= $records_per_page; ?>&sort=<?= $sort_column; ?>&order=<?= $sort_order; ?>&tgl_filter=<?= $tgl_filter; ?>&dokter_filter=<?= $dokter_filter; ?>">« Back</a>
+    <?php endif; ?>
+
+    <?php
+    $adjacents = 2; // jumlah halaman di kiri dan kanan halaman aktif
+    $start = max(1, $page - $adjacents);
+    $end = min($total_pages, $page + $adjacents);
+
+    // Halaman pertama
+    if ($start > 1) {
+        echo '<a href="?page=1&records_per_page='.$records_per_page.'&sort='.$sort_column.'&order='.$sort_order.'&tgl_filter='.$tgl_filter.'&dokter_filter='.$dokter_filter.'" class="'.($page == 1 ? 'active' : '').'">1</a>';
+        if ($start > 2) {
+            echo '<span>...</span>';
+        }
+    }
+
+    // Halaman sekitar current
+    for ($i = $start; $i <= $end; $i++) {
+        echo '<a href="?page='.$i.'&records_per_page='.$records_per_page.'&sort='.$sort_column.'&order='.$sort_order.'&tgl_filter='.$tgl_filter.'&dokter_filter='.$dokter_filter.'" class="'.($i == $page ? 'active' : '').'">'.$i.'</a>';
+    }
+
+    // Halaman terakhir
+    if ($end < $total_pages) {
+        if ($end < $total_pages - 1) {
+            echo '<span>...</span>';
+        }
+        echo '<a href="?page='.$total_pages.'&records_per_page='.$records_per_page.'&sort='.$sort_column.'&order='.$sort_order.'&tgl_filter='.$tgl_filter.'&dokter_filter='.$dokter_filter.'" class="'.($page == $total_pages ? 'active' : '').'">'.$total_pages.'</a>';
+    }
+    ?>
+
+    <?php if ($page < $total_pages): ?>
+        <a href="?page=<?= $page + 1; ?>&records_per_page=<?= $records_per_page; ?>&sort=<?= $sort_column; ?>&order=<?= $sort_order; ?>&tgl_filter=<?= $tgl_filter; ?>&dokter_filter=<?= $dokter_filter; ?>">Next »</a>
+    <?php endif; ?>
+
+    <!-- Box input lompat ke halaman -->
+    <form method="get" style="display:inline-block; margin-left:5px;">
+        <input type="hidden" name="records_per_page" value="<?= $records_per_page; ?>">
+        <input type="hidden" name="sort" value="<?= $sort_column; ?>">
+        <input type="hidden" name="order" value="<?= $sort_order; ?>">
+        <input type="hidden" name="tgl_filter" value="<?= $tgl_filter; ?>">
+        <input type="hidden" name="dokter_filter" value="<?= $dokter_filter; ?>">
+        <input type="number" name="page" min="1" max="<?= $total_pages; ?>" placeholder="Page" style="width:60px; padding:3px;">
+        <button type="submit">Go</button>
+    </form>
+</div>
+
 
         <!-- Records Per Page Selector -->
         <div class="records-per-page">
@@ -202,7 +251,7 @@ function getSortIcon($column, $sort_column, $sort_order) {
 
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2025 RS Permata Pamulang | All Rights Reserved</p>
+    <p>&copy; 2025 Gusviyan - RS Permata Pamulang | All Rights Reserved</p>
 </footer>
 
 <style>

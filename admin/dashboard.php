@@ -158,5 +158,5 @@ function getSortIcon($column, $sort_column, $sort_order) {
 
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2025 RS Permata Pamulang | All Rights Reserved</p>
+    <p>&copy; 2025 Gusviyan - RS Permata Pamulang | All Rights Reserved</p>
 </footer>

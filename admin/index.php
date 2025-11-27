@@ -251,7 +251,7 @@ function getSortIcon($column, $sort_column, $sort_order) {
 
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2025 Gusviyan - RS Permata Pamulang | All Rights Reserved</p>
+    <a href=https://gusviyan.github.io/portofolio/ target="_blank" rel="noopener noreferrer">© 2025 Gusviyan - IT Dept RS Permata Pamulang | All Rights Reserved</a>
 </footer>
 
 <style>

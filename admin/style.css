@@ -1,113 +1,126 @@
-
 /* Global Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    /* soft gradient background for glass effect */
+    background: url('../bg.jpg') no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
     padding: 0;
     display: flex;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    color: #0b1220;
 }
 
-/* Container utama */
+/* Subtle page noise (optional, uncomment if you have a noise.png)
+body {
+    background-image: url('noise.png');
+    background-repeat: repeat;
+}
+*/
+
+/* Container utama (glass) */
 .container {
     width: 80%;
     margin: 30px auto;
-    background: white;
+    background: rgba(255, 255, 255, 0.15); /* translucent surface */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(15, 20, 40, 0.12);
+    overflow: hidden;
 }
 
-/* Sidebar */
+/* Sidebar (dark glass) */
 .sidebar {
     width: 220px;
-    background: #2c3e50;
-    color: white;
+    background: rgba(44, 62, 80, 0.223);
+    color: #ffffff;
     height: 100vh;
     padding: 20px;
-    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 0px 20px rgba(10, 15, 25, 0.12);
     position: fixed;
-    left: 0;
-    top: 0;
+    left: 20px; /* give a little breathing space from edge */
+    top: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.06);
+    -webkit-backdrop-filter: blur(8px) saturate(110%);
+    backdrop-filter: blur(8px) saturate(110%);
 }
 
+/* adjust sidebar spacing when small screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: calc(100% - 40px);
+        height: auto;
+        position: relative;
+        left: 0;
+        top: 0;
+        margin: 20px auto;
+    }
+}
+
+/* Sidebar Header */
 .sidebar h3 {
     text-align: center;
     margin-bottom: 20px;
+    color: #ffffff;
 }
 
+/* Buttons inside sidebar */
 .sidebar-btn {
     display: block;
-    background: #34495e;
+    background: rgba(52, 73, 94, 0.32);
     color: white;
     text-decoration: none;
     padding: 12px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     text-align: center;
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.18s ease, transform 0.12s ease;
 }
 
 .sidebar-btn:hover {
-    background: #423f90;
+    background: rgba(66, 63, 144, 0.36);
+    transform: translateY(-2px);
 }
 
 .logout-btn {
-    background: #e74c3c;
+    background: rgba(231, 76, 60, 0.18);
+    color: #fff;
 }
 
 .logout-btn:hover {
-    background: #c0392b;
+    background: rgba(192, 57, 43, 0.28);
 }
 
- .delete-btn {
-    color: red;
+.delete-btn {
+    color: #ff6b6b;
     text-decoration: none;
     font-weight: bold;
-    }
-
-    .delete-btn:hover {
-        text-decoration: underline;
-    }
-
-/* Media Query for responsiveness */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    
-    .sidebar h3 {
-        font-size: 18px;
-    }
-    
-    .sidebar-btn {
-        width: 100%;
-        text-align: left;
-        padding-left: 20px;
-    }
-    
-    .logout-btn {
-        width: 100%;
-        text-align: left;
-        padding-left: 20px;
-    }
 }
 
+.delete-btn:hover {
+    text-decoration: underline;
+}
 
-/* Main content */
+/* Main content area sits to the right of the sidebar */
 .main-content {
-    margin-left: 240px;
+    margin-left: 280px; /* increased to account for sidebar left offset and gap */
     padding: 20px;
-    width: calc(100% - 240px);
+    width: calc(100% - 300px);
+    min-height: calc(100vh - 120px);
 }
 
-/* Mengatur tampilan logo agar sejajar dengan teks */
+/* logo and heading */
 h2 {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: rgb(0, 0, 0);
+    color: rgb(10, 15, 25);
 }
 
 /* Mengatur ukuran logo */
@@ -116,7 +129,7 @@ h2 {
     height: auto;
 }
 
-/* Filter Container */
+/* Filter Container (glass inputs) */
 .filter-container {
     display: flex;
     justify-content: center;
@@ -125,50 +138,65 @@ h2 {
     margin-bottom: 20px;
 }
 
-.filter-container input, .filter-container button, .filter-container .reset {
+.filter-container input,
+.filter-container button,
+.filter-container .reset {
     padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    color: #0b1220;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
 }
 
+/* primary filter button */
 .filter-container button {
-    background-color: #f58436;
+    background-color: rgba(245, 132, 54, 0.9);
     color: white;
     cursor: pointer;
+    border: none;
+    box-shadow: 0 6px 18px rgba(245,132,54,0.14);
 }
 
 .filter-container .reset {
-    background-color: #423f90;
+    background-color: rgba(66, 63, 144, 0.92);
     color: white;
     text-decoration: none;
     padding: 8px 15px;
+    border: none;
+    box-shadow: 0 6px 18px rgba(66,63,144,0.12);
 }
 
 .filter-container button:hover {
-    background-color: #f77417;
+    background-color: rgba(247, 116, 23, 0.95);
 }
 
 .filter-container .reset:hover {
-    background-color: #1b178d;
+    background-color: rgba(27, 23, 141, 0.95);
 }
 
-/* Table Styles */
+/* Table Styles (transparent surface) */
 table {
     width: 100%;
     border-collapse: collapse;
-    background: white;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
 }
 
 table th, table td {
-    padding: 10px;
+    padding: 12px 10px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 
 table th {
-    background-color: #f58436;
+    background-color: rgba(245, 132, 54, 0.92);
     color: white;
     cursor: pointer;
+    position: relative;
 }
 
 table th a {
@@ -180,39 +208,73 @@ table th a {
 }
 
 table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: rgba(255,255,255,0.02);
 }
 
 table tr:hover {
-    background-color: #f1f1f1;
+    background-color: rgba(255,255,255,0.04);
 }
 
-/* Tombol Logout */
+/* Tombol Logout (small pill with glass) */
 .logout {
     display: block;
     text-align: center;
     padding: 10px;
-    background-color: #ffffff;
+    background: rgba(255,255,255,0.12);
     color: rgb(255, 0, 0);
-    border-radius: 5px;
+    border-radius: 999px;
     text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.06);
 }
 
 .logout:hover {
-    background-color: #ffffff;
+    background: rgba(255,255,255,0.18);
 }
 
 /* Footer */
 .footer {
     width: 100%;
-    background-color: #423f90;
-    color: white;
+    max-width: none;
+    margin: 0 auto;
+    display: flex;
+    align-items: center; /* vertical center */
+    justify-content: center; /* horizontal center */
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    color: rgba(15,17,32,0.85);
     text-align: center;
-    padding: 10px 0;
+    padding: 10px 16px;
     font-size: 14px;
     position: fixed;
-    bottom: 0;
-    left: 0;
+    bottom: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 1px;
+    border: 1px solid rgba(255,255,255,0.12);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    backdrop-filter: blur(10px) saturate(140%);
+    box-shadow: 0 8px 32px rgba(2,6,23,0.45);
+    z-index: 1000;
+}
+
+/* small screens: full width with safe padding */
+@media (max-width: 480px) {
+    .footer {
+        width: calc(100% - 24px);
+        bottom: 12px;
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-size: 13px;
+    }
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.95;
+}
+
+.footer a:hover {
+    opacity: 1;
 }
 
 /* Tabel Kuota */
@@ -225,12 +287,12 @@ table tr:hover {
 .table-kuota th, .table-kuota td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 
 /* Pesan sukses */
 .success-message {
-    color: green;
+    color: #1e8f3e;
     font-weight: bold;
     text-align: center;
     margin-bottom: 10px;
@@ -242,50 +304,65 @@ table tr:hover {
     margin-top: 20px;
 }
 
-/* Tombol utama */
+/* Tombol utama (glass accent) */
 .btn-primary {
-    background-color: #f58436;
+    background: linear-gradient(180deg, rgba(245,132,54,0.95), rgba(230,114,34,0.95));
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
     font-size: 16px;
+    box-shadow: 0 10px 30px rgba(245,132,54,0.14);
 }
 
 .btn-primary:hover {
-    background-color: #e67222;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(230,114,34,0.18);
 }
 
 /* Tombol sekunder */
 .btn-secondary {
-    background-color: #6c757d;
+    background: rgba(108, 117, 125, 0.18);
     color: white;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
     font-size: 16px;
     margin-left: 10px;
+    backdrop-filter: blur(6px);
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
+    background: rgba(90, 98, 104, 0.26);
 }
 
 .edit-btn {
-    background: #ffc107;
+    background: rgba(255, 193, 7, 0.92);
     color: black;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     text-decoration: none;
     font-size: 14px;
     margin-right: 5px;
+    box-shadow: 0 6px 18px rgba(255,193,7,0.12);
 }
 .edit-btn:hover {
-    background: #e0a800;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(224,168,0,0.14);
 }
 
+/* small responsive tweaks */
+@media (max-width: 1024px) {
+    .container { width: 92%; }
+    .main-content { margin-left: 260px; width: calc(100% - 280px); }
+}
 
+@media (max-width: 640px) {
+    .main-content { margin-left: 0; width: 100%; }
+    .container { margin: 16px; border-radius: 10px; padding: 14px; }
+    .footer { left: 16px; right: 16px; width: auto; }
+}
